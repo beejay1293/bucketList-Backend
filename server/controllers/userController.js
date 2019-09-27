@@ -1,6 +1,12 @@
 import bcrypt from 'bcryptjs';
+import redis from 'redis';
+import JWTR from 'jwt-redis';
 import Db from '../db/index';
 import Auth from '../middlewares/isAuth';
+
+const redisClient = redis.createClient();
+const jwtr = new JWTR(redisClient);
+
 
 const { createToken } = Auth;
 
@@ -90,6 +96,24 @@ class UserController {
       return res.status(500).json({
         status: 500,
         error: 'Something went wrong, try again',
+      });
+    }
+  }
+
+  static async logout(req, res) {
+    const { token } = req.headers;
+
+    try {
+      await jwtr.destroy(token);
+
+      res.status(200).json({
+        status: 200,
+        message: "you've been logged out",
+      });
+    } catch (error) {
+      res.status(500).json({
+        status: 500,
+        error: 'internal server error',
       });
     }
   }
