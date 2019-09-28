@@ -43,7 +43,7 @@ app.use(
   app.use('/api/v1/auth', users);
 
   // Bucketlist routes
-//   app.use('/api/v1/bucketList', bucketList);
+  app.use('/api/v1/', bucketList);
 
   app.all('*', (req, res) => res.status(404).json({
       status: 404,
