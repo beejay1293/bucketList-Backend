@@ -33,21 +33,59 @@ class BucketListController {
   }
 
   static async getAllBucketLists(req, res) {
+    const { id } = req.user;
+    const { page, limit, q } = req.query;
+
+    let currentPage = page !== undefined ? parseInt(page, 10) : page;
+    let pageLimit = limit !== undefined ? parseInt(limit, 10) : page;
+
+
     try {
-      const { id } = req.user;
-      const queryString = 'SELECT bucketlists.id, bucketlists.name, bucketlists.date_created, bucketlists.date_modified FROM bucketlists LEFT JOIN bucketlist_items on bucketlists.id = bucketlist_items.bucketlist WHERE bucketlists.created_by = $1';
+      const queryString = 'SELECT * FROM bucketlists WHERE created_by = $1 ORDER BY bucketlists.date_created DESC';
       const { rows } = await query(queryString, [id]);
 
+      const rowsCount = rows.length;
+      if (pageLimit === undefined || Number.isNaN(pageLimit)) {
+        pageLimit = 20;
+      }
+
+
+      const pages = Math.ceil(rowsCount / pageLimit);
+
+      if (currentPage === undefined || Number.isNaN(currentPage)) {
+        currentPage = 1;
+      }
+      let start = ((currentPage - 1) * pageLimit);
+
+      if (currentPage > pages || currentPage <= 0) {
+        start = 0;
+      }
+
+
+      const querys = `SELECT * FROM bucketlists WHERE created_by = $1 ORDER BY bucketlists.date_created DESC LIMIT ${pageLimit} OFFSET ${start}`;
+      const buckets = await query(querys, [id]);
       if (rows.length === 0) {
         return res.status(200).json({
           status: 200,
+          data: buckets.rows,
           messages: 'you have not created any bucket list yet',
+        });
+      }
+
+      if (q !== undefined) {
+        const searchQuery = `SELECT * FROM bucketlists WHERE created_by = $1 AND name LIKE'%${q}%'`;
+        const result = await query(searchQuery, [id]);
+
+        return res.status(200).json({
+          status: 200,
+          data: result.rows,
         });
       }
 
       return res.status(200).json({
         status: 200,
-        data: rows,
+        data: buckets.rows,
+        pages,
       });
     } catch (error) {
       return res.status(500).json({
