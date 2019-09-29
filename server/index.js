@@ -1,6 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
 import morgan from 'morgan';
 import users from './routes/api/user';
 import bucketList from './routes/api/BucketList';
@@ -9,49 +11,53 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
+const swaggerDocument = YAML.load(`${__dirname}/../swagger.yaml`);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use(bodyParser.json());
 app.use(morgan('combined'));
 
 app.use(
-    cors({
-      origin: '*',
-      methods: 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS',
-      preflightContinue: false,
-      optionsSuccessStatus: 204,
-    }),
-  );
+  cors({
+    origin: '*',
+    methods: 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS',
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  }),
+);
 
-  app.all('/*', (req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'X-Requested-With');
-    next();
-  });
+app.all('/*', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With');
+  next();
+});
 
-  app.use(cors());
+app.use(cors());
 
-  app.get('/', (req, res) => res.status(200).json({
-   status: 200,
-   data: [
-       {
-          message: 'welcome to BucketList app'
-       }
-   ]
- 
-  }))
+app.get('/', (req, res) => res.status(200).json({
+  status: 200,
+  data: [
+    {
+      message: 'welcome to BucketList app',
+    },
+  ],
 
-  //user routes
-  app.use('/api/v1/auth', users);
+}));
 
-  // Bucketlist routes
-  app.use('/api/v1/', bucketList);
+// user routes
+app.use('/api/v1/auth', users);
 
-  app.all('*', (req, res) => res.status(404).json({
-      status: 404,
-      error: 'route does not exist'
-  }))
+// Bucketlist routes
+app.use('/api/v1/', bucketList);
 
-  const port = process.env.PORT || 5000
+app.all('*', (req, res) => res.status(404).json({
+  status: 404,
+  error: 'route does not exist',
+}));
 
-  app.listen(port)
+const port = process.env.PORT || 5000;
 
-  export default app;
+app.listen(port);
+
+export default app;

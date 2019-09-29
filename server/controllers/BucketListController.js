@@ -239,7 +239,7 @@ class BucketListController {
           error: 'bucketlist does not exist',
         });
       }
-      const queryString = 'SELECT * from bucketlist_items WHERE(bucketlist, created_by) = ($1, $2)';
+      const queryString = 'SELECT * from bucketlist_items WHERE(bucketlist, created_by) = ($1, $2) ORDER BY bucketlist_items.date_created ASC';
 
       const { rows } = await query(queryString, [idParams, id]);
 
