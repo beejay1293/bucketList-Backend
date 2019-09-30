@@ -1,0 +1,480 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: BucketList
+  description: A web app that helps user to keep track of their dreams, aspirations and long life desires.
+  contact: {}
+host: bucketlists-app.herokuapp.com
+basePath: /api/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /auth/signup:
+    post:
+      description: users should be able to signup
+      summary: Signup
+      tags:
+      - Auth
+      operationId: AuthSignupPost
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/SignupRequest'
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /auth/login:
+    post:
+      description: Users should be able to login
+      summary: login
+      tags:
+      - Auth
+      operationId: AuthLoginPost
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/loginrequest'
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /auth/logout:
+    get:
+      description: User should be able to logout of their bucketlist account
+      summary: logout
+      tags:
+      - Auth
+      operationId: AuthLogoutGet
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /bucketlists:
+    post:
+      description: Authenticated users should be able to create a new bucketlist
+      summary: Create Bucketlist
+      tags:
+      - Bucketlist
+      operationId: BucketlistsPost
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/CreateBucketlistRequest'
+      responses:
+        200:
+          description: ''
+          headers: {}
+    get:
+      description: Authenticated user should be able to get all bucketlist they created
+      summary: Get all bucketlists
+      tags:
+      - Bucketlist
+      operationId: BucketlistsGet
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /bucketlists/5:
+    get:
+      description: 'Authenticated users should be able to get a single bucketlist they created '
+      summary: Get single bucketlist
+      tags:
+      - Bucketlist
+      operationId: Bucketlists5Get
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          headers: {}
+    put:
+      description: Authenticated users should be able to edit a bucket list they create
+      summary: Edit single bucketlist
+      tags:
+      - Bucketlist
+      operationId: Bucketlists5Put
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/EditsinglebucketlistRequest'
+      responses:
+        200:
+          description: ''
+          headers: {}
+    delete:
+      description: Authenticated users should be able to delete a single bucketlist they create
+      summary: Delete single bucketlist
+      tags:
+      - Bucketlist
+      operationId: Bucketlists5Delete
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/DeletesinglebucketlistRequest'
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /bucketlists/6/items:
+    post:
+      description: Authenticated users should be able to create a new list in a bucketlist
+      summary: Create a new list
+      tags:
+      - Bucketlist
+      operationId: Bucketlists6ItemsPost
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/CreateanewlistRequest'
+      responses:
+        200:
+          description: ''
+          headers: {}
+    get:
+      description: Authenticated users should be able to get all lists in a bucketlist
+      summary: Get all lists in a bucketlist
+      tags:
+      - Bucketlist
+      operationId: Bucketlists6ItemsGet
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /bucketlists/6/items/4:
+    get:
+      description: Authenticated users should be able to get a signle list in a bucketlist
+      summary: Get a single list in a bucketlist
+      tags:
+      - Bucketlist
+      operationId: Bucketlists6Items4Get
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          headers: {}
+    put:
+      description: Authenticated users should be able to edit a list they created in a bucketlist
+      summary: Edit a single list in a bucketlist
+      tags:
+      - Bucketlist
+      operationId: Bucketlists6Items4Put
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/EditasinglelistinabucketlistRequest'
+      responses:
+        200:
+          description: ''
+          headers: {}
+    delete:
+      description: Authenticated users should be able to delete a list item in a bucketlist they created
+      summary: Delete a single list in a bucketlist
+      tags:
+      - Bucketlist
+      operationId: Bucketlists6Items4Delete
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/DeleteasinglelistinabucketlistRequest'
+      responses:
+        200:
+          description: ''
+          headers: {}
+definitions:
+  SignupRequest:
+    title: SignupRequest
+    example:
+      firstname: 'usman   '
+      lastname: 'Matti   '
+      email: mattim@epic.com
+      number: 0819321
+      password: december
+    type: object
+    properties:
+      firstname:
+        type: string
+      lastname:
+        type: string
+      email:
+        type: string
+      number:
+        type: string
+      password:
+        type: string
+    required:
+    - firstname
+    - lastname
+    - email
+    - number
+    - password
+  loginrequest:
+    title: loginrequest
+    example:
+      email: mattim@epic.com
+      password: december
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+  CreateBucketlistRequest:
+    title: CreateBucketlistRequest
+    example:
+      name: School plans
+    type: object
+    properties:
+      name:
+        type: string
+    required:
+    - name
+  EditsinglebucketlistRequest:
+    title: EditsinglebucketlistRequest
+    example:
+      name: School plans2
+    type: object
+    properties:
+      name:
+        type: string
+    required:
+    - name
+  DeletesinglebucketlistRequest:
+    title: DeletesinglebucketlistRequest
+    example:
+      name: School plans2
+    type: object
+    properties:
+      name:
+        type: string
+    required:
+    - name
+  CreateanewlistRequest:
+    title: CreateanewlistRequest
+    example:
+      name: Go to the market to get some books
+    type: object
+    properties:
+      name:
+        type: string
+    required:
+    - name
+  EditasinglelistinabucketlistRequest:
+    title: EditasinglelistinabucketlistRequest
+    example:
+      name: Go to the supermarket to get some books to read
+      done: true
+    type: object
+    properties:
+      name:
+        type: string
+      done:
+        type: boolean
+    required:
+    - name
+    - done
+  DeleteasinglelistinabucketlistRequest:
+    title: DeleteasinglelistinabucketlistRequest
+    example:
+      name: Go to school on monday
+    type: object
+    properties:
+      name:
+        type: string
+    required:
+    - name
+tags:
+- name: Auth
+- name: Bucketlist
