@@ -84,7 +84,7 @@ The API is currently in version 1 (v1) and is hosted at
 
 ## API Documentation
 
-[https://bucketlists-app.herokuapp.com/](https://bucketlists-app.herokuapp.com/api-docs/)
+[https://bucketlists-app.herokuapp.com/api-docs](https://bucketlists-app.herokuapp.com/api-docs/)
 
 ## Author
 
