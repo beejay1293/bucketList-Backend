@@ -28,7 +28,7 @@
     "chai-http": "^4.2.1",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "faker": "^4.1.0",
     "jsonwebtoken": "^8.5.0",
     "moment": "^2.24.0",
